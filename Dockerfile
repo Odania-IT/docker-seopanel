@@ -9,5 +9,6 @@ RUN curl -o spdownload.zip http://www.seopanel.in/spdownload/ && unzip spdownloa
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) mysqli
 
-RUN chmod 666 config/sp-config.php
-RUN chmod -R 777 tmp/
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod 666 /var/www/html/config/sp-config.php
+RUN chmod -R 777 /var/www/html/tmp/
