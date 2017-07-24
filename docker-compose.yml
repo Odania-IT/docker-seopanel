@@ -35,8 +35,10 @@ seopanel:
     - mariadb
     - mailcatcher
   environment:
-    DB_NAME: seopanel
-    DB_USER: root
-    DB_PASSWORD: testpw
+    DB_HOST: "mariadb"
+    DB_NAME: "seopanel"
+    DB_USER: "root"
+    DB_PASSWORD: "testpw"
+    SP_INSTALLED: "true"
   tty: true
   stdin_open: true

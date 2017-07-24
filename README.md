@@ -4,29 +4,25 @@ SeoPanel Docker Version. You should extend the Docker Image with your config aft
 
 ## Example
 
-Go to the "test" folder and execute
+Just execute
 
 ```
 docker-compose up -d
 ```
 
-Afterwords goto http://lvh.me:8080 and follow the install wizzard with these settings:
+Afterwords goto http://lvh.me:8080 and follow the install wizard with these settings:
 
 ```
-Database Type: Mysql
-Database Host: mariadb
-Database Name: seopanel
-Database User: root
-Database Password: testpw
+Database type: Mysql
+Database server hostname: mariadb
+Database name: seopanel
+Database username: root
+Database password: testpw
 ```
 
-You can set the rest to your own preferences.
+For the next startup you can modify the docker-compose.yml and change SP_INSTALLED from false to true.
 
-Afterwords you get into seo panel. Now you can retrieve the sp-config.php with the following command:
 
-```
-docker exec -ti test_seopanel_1 cat /var/www/html/config/sp-config.php
-```
+### Why is the config in environment files but i still need to make the initial setup?
 
-If you copy the content of the file to the test/sp-config.php you have a working image.
-You should copy the modified contents of "test" to your own repository and build your image from there.
+Unfortunately i did not find an easy way to execute the setup. So the database migration is missing.
