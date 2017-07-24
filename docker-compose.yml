@@ -1,0 +1,42 @@
+mailcatcher:
+  image: odaniait/mailcatcher-docker:latest
+  ports:
+    - "2525:2525"
+    - "1080:1080"
+  tty: true
+  stdin_open: true
+
+mariadb:
+  image: mariadb:latest
+  ports:
+    - "127.0.0.1:3306:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: testpw
+    MYSQL_DATABASE: seopanel
+  tty: true
+  stdin_open: true
+
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin:latest
+  ports:
+    - "8088:80"
+  environment:
+    MYSQL_ROOT_PASSWORD: testpw
+  links:
+    - "mariadb:db"
+  tty: true
+  stdin_open: true
+
+seopanel:
+  build: .
+  ports:
+    - "8080:80"
+  links:
+    - mariadb
+    - mailcatcher
+  environment:
+    DB_NAME: seopanel
+    DB_USER: root
+    DB_PASSWORD: testpw
+  tty: true
+  stdin_open: true
