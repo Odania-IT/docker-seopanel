@@ -7,6 +7,7 @@ RUN apt-get update \
 
 RUN curl -o spdownload.zip https://www.seopanel.in/spdownload/ && unzip spdownload.zip && rm spdownload.zip && mv seopanel/* . && rmdir seopanel
 RUN echo "0 0,6 * * * php /var/www/html/proxycheckercron.php" > /etc/cron.d/seopanel
+RUN echo "*/15 * * * * php /var/www/html/cron.php" >> /etc/cron.d/seopanel
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) mysqli
 
