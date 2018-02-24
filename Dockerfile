@@ -2,10 +2,11 @@ FROM php:7.0-apache
 MAINTAINER mike@odania-it.com
 
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends unzip libpng12-dev \
+	&& apt-get install -y --no-install-recommends unzip libpng12-dev cron \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN curl -o spdownload.zip https://www.seopanel.in/spdownload/ && unzip spdownload.zip && rm spdownload.zip && mv seopanel/* . && rmdir seopanel
+RUN echo "0 0,6 * * * php /var/www/html/proxycheckercron.php" > /etc/cron.d/seopanel
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) mysqli
 
