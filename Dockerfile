@@ -6,8 +6,9 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN curl -o spdownload.zip https://www.seopanel.in/spdownload/ && unzip spdownload.zip && rm spdownload.zip && mv seopanel/* . && rmdir seopanel
-RUN echo "0 0,6 * * * php /var/www/html/proxycheckercron.php" > /etc/cron.d/seopanel
-RUN echo "*/15 * * * * php /var/www/html/cron.php" >> /etc/cron.d/seopanel
+RUN crontab -l > mycron || echo "" > mycron
+RUN echo "###seoCron\n#proxyChecker cron\n0 0,6 * * * php /var/www/html/proxycheckercron.php\n#cron \n*/15 * * * * php /var/www/html/cron.php\n###/seoCron" >> mycron
+RUN crontab mycron && rm mycron
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) mysqli
 
