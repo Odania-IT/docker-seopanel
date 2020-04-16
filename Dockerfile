@@ -1,11 +1,11 @@
-FROM php:7.0-apache
+FROM php:7.4-apache
 MAINTAINER mike@odania-it.com
 
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends unzip libpng12-dev \
+	&& apt-get install -y --no-install-recommends unzip libpng-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN curl -o spdownload.zip https://www.seopanel.in/spdownload/ && unzip spdownload.zip && rm spdownload.zip && mv seopanel/* . && rmdir seopanel
+RUN curl -L -o spdownload.zip https://www.seopanel.in/spdownload/ && unzip spdownload.zip && rm spdownload.zip && mv seopanel/* . && rmdir seopanel
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) mysqli
 
