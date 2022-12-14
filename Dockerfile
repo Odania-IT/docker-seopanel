@@ -5,7 +5,7 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends unzip libpng-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN curl -L -o spdownload.zip https://www.seopanel.in/spdownload/ && unzip spdownload.zip && rm spdownload.zip && mv seopanel/* . && rmdir seopanel
+RUN curl -L -o spdownload.zip https://www.seopanel.in/spdownload/ --http1.1 && unzip spdownload.zip && rm spdownload.zip && mv seopanel/* . && rmdir seopanel
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) mysqli
 
